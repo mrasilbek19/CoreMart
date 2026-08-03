@@ -1,0 +1,16 @@
+{
+  "name": "coremart",
+  "version": "1.0.0",
+  "description": "Shop for celling computer core parts",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "start:dev": "nodemon --exec ts-node src/server.ts",
+    "train": "nodemon --exec python3 train.py",
+    "train1": "nodemon --exec ts-node src/train.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex",
+  "license": "ISC"
+}
