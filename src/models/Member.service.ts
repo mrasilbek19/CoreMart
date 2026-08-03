@@ -1,10 +1,12 @@
-import MemberModel from "../schema/Member.Model";
+import MemberModel from "../schema/Member.model";
 
 class MemberService {
     private readonly memberModel;
     constructor() {
         this.memberModel = MemberModel;
     }
+
+
 
 
 }
