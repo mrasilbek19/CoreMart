@@ -15,7 +15,10 @@ routerAdmin
         makeUploader("members").single("memberImage"),
         shopController.processSignup);
 
+
+//routerAdmin.get("/logout", shopController.getLogout);
 routerAdmin.get("/users", shopController.getUsers);
+
 
 
 export default routerAdmin;

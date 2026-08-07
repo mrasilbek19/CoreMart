@@ -80,7 +80,19 @@ shopController.processLogin = async (req: AdminRequest, res: Response) => {
         const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
         res.send(`<script> alert("${message}"); window.location.replace('/admin/signup')</script>`)
     }
-}
+};
+
+shopController.getLogout = (req: Request, res: Response) => {
+    try {
+        console.log("getLogout page")
+        req.session.destroy(function () {
+            res.redirect("/admin");
+        })
+    } catch (err) {
+        console.log("Error, getLogout:", err);
+        res.redirect("/admin")
+    }
+};
 
 shopController.getUsers = async (req: Request, res: Response) => {
     try {
