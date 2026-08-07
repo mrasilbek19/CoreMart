@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { T } from "../libs/types/common";
 import { MemberType } from "../libs/enums/member.enum";
-import { MemberInput } from "../libs/types/member";
+import { AdminRequest, LoginInput, MemberInput, MemberUpdateInput } from "../libs/types/member";
 import MemberService from "../models/Member.service";
-import Errors, { Message } from "../libs/Errors";
+import Errors, { HttpCode, Message } from "../libs/Errors";
 
 
 const memberService = new MemberService();
@@ -30,16 +30,32 @@ shopController.getSignup = (req: Request, res: Response) => {
     }
 };
 
-shopController.processSignup = async (req: Request, res: Response) => {
+shopController.getLogin = (req: Request, res: Response) => {
+    try {
+        console.log("getLogin page")
+        res.render("login");
+    } catch (err) {
+        console.log("Error, getLogin:", err);
+        res.redirect("/admin")
+    }
+};
+
+shopController.processSignup = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processSignup page")
-        console.log(req.body);
-        const newMember: MemberInput = req.body
-        newMember.memberType = MemberType.SHOP
-        console.log(newMember);
-        const result = await memberService.processSignup(newMember);
+        const file = req.file;
+        if (!file)
+            throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG)
 
-        res.json(result);
+        const newMember: MemberInput = req.body
+        newMember.memberImage = file?.path.replace(/\\/g, "/");
+        newMember.memberType = MemberType.SHOP;
+        const result = await memberService.processSignup(newMember)
+
+        req.session.member = result;
+        req.session.save(function () {
+            res.redirect("/admin/product/all");
+        })
 
     } catch (err) {
         console.log("Error, processSignup:", err);
@@ -47,6 +63,24 @@ shopController.processSignup = async (req: Request, res: Response) => {
         res.send(`<script> alert("${message}"); window.location.replace('/admin/signup')</script>`)
     }
 };
+
+shopController.processLogin = async (req: AdminRequest, res: Response) => {
+    try {
+        console.log("processLogin");
+        console.log(req.body);
+        const memberInput: LoginInput = req.body
+        const result = await memberService.processLogin(memberInput)
+
+        req.session.member = result;
+        req.session.save(function () {
+            res.redirect("/admin/"); // consider later
+        })
+    } catch (err) {
+        console.log("Error, processLogin:", err);
+        const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+        res.send(`<script> alert("${message}"); window.location.replace('/admin/signup')</script>`)
+    }
+}
 
 
 
