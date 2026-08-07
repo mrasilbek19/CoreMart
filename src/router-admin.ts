@@ -13,12 +13,28 @@ routerAdmin
     .post(
         "/signup",
         makeUploader("members").single("memberImage"),
-        shopController.processSignup);
+        shopController.processSignup
+    );
+
+routerAdmin.get("/logout", shopController.getLogout);
 
 
-//routerAdmin.get("/logout", shopController.getLogout);
-routerAdmin.get("/users", shopController.getUsers);
+//Product
 
+
+
+
+//User
+routerAdmin.get("/users",
+    //verify
+    shopController.getUsers
+);
+
+routerAdmin.post(
+    "/user/edit",
+    //verify
+    shopController.updateChosenUser
+);
 
 
 export default routerAdmin;
