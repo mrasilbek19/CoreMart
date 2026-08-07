@@ -26,13 +26,13 @@ routerAdmin.get("/logout", shopController.getLogout);
 
 //User
 routerAdmin.get("/users",
-    //verify
+    shopController.verifyShop,
     shopController.getUsers
 );
 
 routerAdmin.post(
     "/user/edit",
-    //verify
+    shopController.verifyShop,
     shopController.updateChosenUser
 );
 
