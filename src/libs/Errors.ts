@@ -17,7 +17,7 @@ export enum Message {
 
     NO_MEMBER_NICK_OR_MEMBER_EMAIL = "No member with that Nick or Email!",
     TOKEN_CREATION_FAILED = "Token creation error!",
-    BLOCKED_USER = "You have been blocked, contact the restaurant!",
+    BLOCKED_USER = "You have been blocked, contact the shop!",
     USED_NICK_PHONE = "You are inserting already used Nick or Phone!",
     WRONG_PASSWORD = "You entered wrong password, Please try again!",
     NOT_AUTHENTICATED = "You are not authenticated, Please login first!"
