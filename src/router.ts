@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/member/shop", memberController.getShop)
 router.post("/member/signup", memberController.signup);
+router.post("/member/login", memberController.login);
 
 
 /* PRODUCT */
