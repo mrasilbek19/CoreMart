@@ -132,7 +132,7 @@ memberController.retrieveAuth = async (req: ExtendedRequest, res: Response, next
         next();
     }
 
-}
+};
 
 
 export default memberController;
