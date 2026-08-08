@@ -1,6 +1,7 @@
 import express from "express";
 import shopController from "./controllers/shop.controller";
 import makeUploader from "./libs/utils/uploader";
+import productController from "./controllers/product.controller";
 const routerAdmin = express.Router();
 
 routerAdmin.get("/", shopController.goHome);
@@ -20,6 +21,12 @@ routerAdmin.get("/logout", shopController.getLogout);
 
 
 //Product
+routerAdmin.post(
+    "/product/add",
+    shopController.verifyShop,
+    makeUploader("products").array("productImages", 5),
+    productController.addNewProduct
+);
 
 
 
