@@ -28,6 +28,12 @@ routerAdmin.post(
     productController.addNewProduct
 );
 
+routerAdmin.get(
+    "/product/all",
+    shopController.verifyShop,
+    productController.getAllProducts
+);
+
 
 
 
