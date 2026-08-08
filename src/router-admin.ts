@@ -19,7 +19,6 @@ routerAdmin
 
 routerAdmin.get("/logout", shopController.getLogout);
 
-
 //Product
 routerAdmin.post(
     "/product/add",
@@ -34,8 +33,11 @@ routerAdmin.get(
     productController.getAllProducts
 );
 
-
-
+routerAdmin.post(
+    "/product/:id",
+    shopController.verifyShop,
+    productController.updateChosenProduct
+);
 
 //User
 routerAdmin.get("/users",
