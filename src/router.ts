@@ -9,6 +9,16 @@ router.post("/member/signup", memberController.signup);
 router.post("/member/login", memberController.login);
 
 
+router.post(
+    "/member/logout",
+    memberController.logout
+);
+
+router.get(
+    "/member/detail",
+    memberController.getMemberDetail
+);
+
 /* PRODUCT */
 
 
