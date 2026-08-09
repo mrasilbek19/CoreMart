@@ -1,7 +1,7 @@
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import { Request, Response } from "express";
 import { T } from "../libs/types/common";
-import { AdminRequest } from "../libs/types/member";
+import { AdminRequest, ExtendedRequest } from "../libs/types/member";
 import { ProductInput } from "../libs/types/product";
 import ProductService from "../models/Product.service";
 
@@ -68,6 +68,21 @@ productController.updateChosenProduct = async (req: Request, res: Response) => {
 
 
 /** SPA **/
+
+productController.getProduct = async (req: ExtendedRequest, res: Response) => {
+    try {
+        console.log("getProduct");
+        console.log(req.params)
+        const { id } = req.params,
+            result = await productService.getProduct(id as string);
+
+        res.status(HttpCode.OK).json(result);
+    } catch (err) {
+        console.log("Error, getProduct:", err);
+        if (err instanceof Errors) res.status(err.code).json(err);
+        else res.status(Errors.standard.code).json(Errors.standard);
+    }
+};
 
 
 export default productController;

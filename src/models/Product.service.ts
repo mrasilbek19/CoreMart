@@ -1,6 +1,8 @@
 import { shapeIntoMongooseObkectId } from "../libs/config";
+import { ProductStatus } from "../libs/enums/product.enum";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import { T } from "../libs/types/common";
+import { ObjectId } from "mongoose";
 import { Product, ProductInput, ProductUpdateInput } from "../libs/types/product";
 import ProductModel from "../schema/Product.model";
 
@@ -10,7 +12,25 @@ class ProductService {
     constructor() {
         this.productModel = ProductModel;
     }
+
+
     /** SPA */
+
+    public async getProduct(
+        id: string
+    ): Promise<Product> {
+        const productId = shapeIntoMongooseObkectId(id);
+        console.log("here---->", id)
+
+        let result = await this.productModel
+            .findOne({
+                _id: productId,
+                productStatus: ProductStatus.PROCESS,
+            })
+            .exec();
+        if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+        return result;
+    }
 
     /** SSR */
 

@@ -1,3 +1,3 @@
-export enum ViewGroup {
+export enum LikeGroup {
     PRODUCT = "PRODUCT",
 }
