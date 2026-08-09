@@ -31,14 +31,15 @@ router.post("/member/update",
 
 /* PRODUCT */
 
-router.get("/member/product/:id",
-    productController.getProduct
+router.get("/product/all",
+    productController.getProducts);
+
+router.get("/product/:id",
+    memberController.retrieveAuth,
+    productController.getProduct,
 )
 
-
-
-
-/* USER */
+/* ORDER */
 
 
 export default router;
