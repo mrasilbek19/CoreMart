@@ -8,14 +8,19 @@ import ProductModel from "../schema/Product.model";
 import { ViewInput } from "../libs/types/view";
 import { ViewGroup } from "../libs/enums/view.enum";
 import ViewService from "./View.service";
+import LikeService from "./Like.service";
+import { LikeInput } from "../libs/types/like";
+import { LikeGroup } from "../libs/enums/like.enum";
 
 class ProductService {
     private readonly productModel;
-    public viewService;
+    private readonly viewService: ViewService;
+    private readonly likeService: LikeService;
 
     constructor() {
         this.productModel = ProductModel;
         this.viewService = new ViewService();
+        this.likeService = new LikeService();
     }
 
 
@@ -84,6 +89,48 @@ class ProductService {
                     .exec();
             }
         }
+        return result;
+    }
+
+    public async plusLike(
+        memberId: ObjectId | null,
+        id: string
+    ): Promise<Product> {
+
+        const productId = shapeIntoMongooseObkectId(id);
+
+        const result = await this.productModel
+            .findOne({
+                _id: productId,
+                productStatus: ProductStatus.PROCESS,
+            })
+            .exec();
+
+        if (!result) {
+            throw new Errors(
+                HttpCode.NOT_FOUND,
+                Message.NO_DATA_FOUND
+            );
+        }
+
+        if (memberId) {
+
+            const input: LikeInput = {
+                memberId: memberId,
+                likeRefId: productId,
+                likeGroup: LikeGroup.PRODUCT,
+            };
+
+            const existLike =
+                await this.likeService.checkLikeExistence(input);
+
+            console.log("exist:", !!existLike);
+
+            if (!existLike) {
+                await this.likeService.insertMemberLike(input);
+            }
+        }
+
         return result;
     }
 

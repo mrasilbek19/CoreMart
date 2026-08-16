@@ -12,7 +12,7 @@ export interface Like {
 }
 
 export interface LikeInput {
+    likeRefId: ObjectId;
     memberId: ObjectId;
-    viewRefId: ObjectId;
     likeGroup: LikeGroup;
 }
