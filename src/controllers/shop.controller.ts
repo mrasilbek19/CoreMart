@@ -66,21 +66,22 @@ shopController.processSignup = async (req: AdminRequest, res: Response) => {
 
 shopController.processLogin = async (req: AdminRequest, res: Response) => {
     try {
-        console.log("processLogin");
-        console.log(req.body);
-        const memberInput: LoginInput = req.body
-        const result = await memberService.processLogin(memberInput)
+        console.log("processLogin page")
+        console.log(req.body)
+        const input: LoginInput = req.body
+        console.log("++", input);
+        const result = await memberService.processLogin(input)
 
         req.session.member = result;
         req.session.save(function () {
-            res.redirect("/admin/"); // consider later
+            res.redirect("/admin/product/all");
         })
     } catch (err) {
         console.log("Error, processLogin:", err);
         const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
-        res.send(`<script> alert("${message}"); window.location.replace('/admin/signup')</script>`)
+        res.send(`<script> alert("${message}"); window.location.replace('/admin/login')</script>`)
     }
-};
+};;
 
 shopController.getLogout = (req: Request, res: Response) => {
     try {

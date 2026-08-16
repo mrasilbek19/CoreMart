@@ -37,23 +37,53 @@ class MemberService {
                 {
                     $or: [
                         { memberNick: input.login },
-                        { memberEmail: input.login }
-                    ]
+                        { memberEmail: input.login },
+                    ],
+                    memberType: MemberType.SHOP,
+                    memberStatus: {
+                        $ne: MemberStatus.DELETE,
+                    },
                 },
-                { memberNick: 1, memberEmail: 1, memberPassword: 1 }
+                {
+                    memberNick: 1,
+                    memberEmail: 1,
+                    memberPassword: 1,
+                    memberStatus: 1,
+                    memberType: 1,
+                }
             )
             .exec();
-        if (!member) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK_OR_MEMBER_EMAIL);
+
+        if (!member) {
+            throw new Errors(
+                HttpCode.NOT_FOUND,
+                Message.NO_MEMBER_NICK_OR_MEMBER_EMAIL
+            );
+        }
+
+        if (member.memberStatus === MemberStatus.BLOCK) {
+            throw new Errors(
+                HttpCode.FORBIDDEN,
+                Message.BLOCKED_USER
+            );
+        }
+
         const isMatch = await bcrypt.compare(
             input.memberPassword,
             member.memberPassword
         );
 
         if (!isMatch) {
-            throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PASSWORD);
+            throw new Errors(
+                HttpCode.UNAUTHORIZED,
+                Message.WRONG_PASSWORD
+            );
         }
 
-        return await this.memberModel.findById(member._id).exec();
+        return await this.memberModel
+            .findById(member._id)
+            .lean()
+            .exec();
     }
 
     public async getUsers(): Promise<Member[]> {
