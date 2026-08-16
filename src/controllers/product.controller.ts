@@ -4,6 +4,7 @@ import { T } from "../libs/types/common";
 import { AdminRequest, ExtendedRequest } from "../libs/types/member";
 import { ProductInput, ProductInquiry } from "../libs/types/product";
 import ProductService from "../models/Product.service";
+import { ProductCollection } from "../libs/enums/product.enum";
 
 const productService = new ProductService();
 
