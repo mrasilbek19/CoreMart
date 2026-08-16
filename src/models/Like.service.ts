@@ -20,7 +20,7 @@ class LikeService {
         try {
             return await this.likeModel.create(input);
         } catch (err) {
-            console.log("ERROR, model:insertMemberView:", err);
+            console.log("ERROR, model:insertMemberLike:", err);
             throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
         }
     }
