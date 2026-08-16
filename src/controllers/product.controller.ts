@@ -95,8 +95,9 @@ productController.getProducts = async (req: Request, res: Response) => {
 productController.getProduct = async (req: ExtendedRequest, res: Response) => {
     try {
         console.log("getProduct");
-        const { id } = req.params,
-            result = await productService.getProduct(id as string);
+        const { id } = req.params;
+        const memberId = req.member?._id ?? null,
+            result = await productService.getProduct(memberId, id as string);
 
         res.status(HttpCode.OK).json(result);
     } catch (err) {

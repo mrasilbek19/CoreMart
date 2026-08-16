@@ -30,14 +30,20 @@ router.post("/member/update",
 );
 
 /* PRODUCT */
-
 router.get("/product/all",
     productController.getProducts);
 
-router.get("/product/:id",
+router.get(
+    "/product/:id",
     memberController.retrieveAuth,
-    productController.getProduct,
-)
+    productController.getProduct
+);
+
+// router.post("/product/:id/like",
+//     memberController.retrieveAuth,
+//     productController.plusLike,
+// )
+
 
 /* ORDER */
 router.post(
