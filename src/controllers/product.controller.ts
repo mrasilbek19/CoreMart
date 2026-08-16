@@ -107,5 +107,44 @@ productController.getProduct = async (req: ExtendedRequest, res: Response) => {
     }
 };
 
+productController.plusLike = async (req: ExtendedRequest, res: Response) => {
+    try {
+        const memberId = req.member._id;
+        const id = req.params.id;
+        console.log(memberId, id)
+
+        const result = await productService.plusLike(
+            memberId,
+            id
+        );
+
+        res.status(HttpCode.OK).json(result);
+
+    } catch (err) {
+        console.log("ERROR, plusLike:", err);
+        throw err;
+    }
+}
+
+productController.minusLike = async (req: ExtendedRequest, res: Response) => {
+    try {
+        const memberId = req.member._id;
+        const id = req.params.id;
+        console.log(memberId, id)
+
+        const result = await productService.minusLike(
+            memberId,
+            id
+        );
+
+        res.status(HttpCode.OK).json(result);
+
+    } catch (err) {
+        console.log("ERROR, plusLike:", err);
+        throw err;
+    }
+}
+
+
 
 export default productController;

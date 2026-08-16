@@ -39,10 +39,16 @@ router.get(
     productController.getProduct
 );
 
-// router.post("/product/:id/like",
-//     memberController.retrieveAuth,
-//     productController.plusLike,
-// )
+router.post("/product/:id/like",
+    memberController.retrieveAuth,
+    productController.plusLike,
+)
+
+router.delete(
+    "/product/:id/like",
+    memberController.retrieveAuth,
+    productController.minusLike,
+);
 
 
 /* ORDER */

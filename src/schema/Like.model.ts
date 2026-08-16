@@ -3,7 +3,7 @@ import { LikeGroup } from "../libs/enums/like.enum";
 
 const likeSchema = new Schema(
     {
-        LikeGroup: {
+        likeGroup: {
             type: String,
             enum: LikeGroup,
             required: true,

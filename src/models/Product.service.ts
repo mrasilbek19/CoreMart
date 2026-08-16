@@ -99,7 +99,7 @@ class ProductService {
 
         const productId = shapeIntoMongooseObkectId(id);
 
-        const result = await this.productModel
+        let result = await this.productModel
             .findOne({
                 _id: productId,
                 productStatus: ProductStatus.PROCESS,
@@ -114,7 +114,6 @@ class ProductService {
         }
 
         if (memberId) {
-
             const input: LikeInput = {
                 memberId: memberId,
                 likeRefId: productId,
@@ -128,6 +127,63 @@ class ProductService {
 
             if (!existLike) {
                 await this.likeService.insertMemberLike(input);
+
+                result = await this.productModel
+                    .findByIdAndUpdate(
+                        productId,
+                        { $inc: { productLikes: 1 } },
+                        { new: true }
+                    )
+                    .exec();
+            }
+        }
+
+        return result;
+    }
+
+    public async minusLike(
+        memberId: ObjectId | null,
+        id: string
+    ): Promise<Product> {
+
+        const productId = shapeIntoMongooseObkectId(id);
+
+        let result = await this.productModel
+            .findOne({
+                _id: productId,
+                productStatus: ProductStatus.PROCESS,
+            })
+            .exec();
+
+        if (!result) {
+            throw new Errors(
+                HttpCode.NOT_FOUND,
+                Message.NO_DATA_FOUND
+            );
+        }
+
+        if (memberId) {
+            const input: LikeInput = {
+                memberId: memberId,
+                likeRefId: productId,
+                likeGroup: LikeGroup.PRODUCT,
+            };
+
+            const existLike =
+                await this.likeService.checkLikeExistence(input);
+
+            console.log("exist:", !!existLike);
+
+            if (existLike) {
+                await this.likeService.removeMemberLike(input);
+
+                result = await this.productModel
+                    .findByIdAndUpdate(
+                        productId,
+                        { $inc: { productLikes: -1 } },
+                        { new: true }
+                    )
+                    .exec();
             }
         }
 

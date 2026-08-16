@@ -24,6 +24,23 @@ class LikeService {
             throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
         }
     }
+    public async removeMemberLike(input: LikeInput): Promise<Like> {
+        try {
+            return await this.likeModel
+                .findOneAndDelete({
+                    memberId: input.memberId,
+                    likeRefId: input.likeRefId,
+                    likeGroup: input.likeGroup,
+                })
+                .exec();
+        } catch (err) {
+            console.log("ERROR, model:removeMemberLike:", err);
+            throw new Errors(
+                HttpCode.BAD_REQUEST,
+                Message.DELETE_FAILED
+            );
+        }
+    }
 
 }
 
