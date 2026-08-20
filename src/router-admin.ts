@@ -40,7 +40,7 @@ routerAdmin.post(
 );
 
 //User
-routerAdmin.get("/users",
+routerAdmin.get("/user/all",
     shopController.verifyShop,
     shopController.getUsers
 );
