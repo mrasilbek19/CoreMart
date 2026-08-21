@@ -6,11 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(-45deg,
-      #979283,
-      #48552c,
-      #455650,
-      #33303f);
+  background: linear-gradient(135deg, #c9558f 0%, #e8c9d8 15%, #f0ede0 35%, #a8ddd0 50%, #6fb8cc 65%, #4a7fb8 85%, #2a3a6e 100%);
 }
 
 .products-container a {
