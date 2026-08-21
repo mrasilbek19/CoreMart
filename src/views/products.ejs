@@ -21,11 +21,11 @@
                 </ul>
             </div>
 
-            <div class="restaurant-menu-frame">
+            <div class="shop-menu-frame">
                 <div class="board">
                     <div class="dishes-table">
                         <span class="new-dish-txt" style="margin-bottom: 30px">
-                            SHOP PRODUCTS
+                            SHOP MENU
                         </span>
                         <table class="table table-bordered table-hover">
                             <thead class="thead-light">
@@ -52,11 +52,10 @@
                                         <%= value.productCollection%>
                                     </td>
                                     <td>
-                                        <%= value.productVolume%>
+                                        <%= value.productVolume %> ml
                                     </td>
                                     <td>
-                                        <input type="number" class="product-price" value="<%= value.productPrice %>"
-                                            id="<%= value._id %>" />
+                                        $<%= value.productPrice%>
                                     </td>
                                     <td>
                                         <%= value.productLeftCount%>
@@ -84,7 +83,7 @@
                             </button>
                         </div>
                     </div>
-                    <form onsubmit="return validateForm()" action="/admin/product/create" method="POST"
+                    <form onsubmit="return validateForm()" action="/admin/product/add" method="POST"
                         class="dish-container" enctype="multipart/form-data">
                         <div class="long-input" style="display: flex; align-items: center">
                             <span class="new-dish-txt">NEW PRODUCT DETAIL</span>
@@ -111,32 +110,21 @@
                             <div class="half-input">
                                 <label>Product Type</label>
                                 <select class="product-collection" name="productCollection">
-                                    <option value="DISH" selected>Dish</option>
-                                    <option value="SALAD">Salad</option>
-                                    <option value="DESSERT">Dessert</option>
-                                    <option value="DRINK">Drink</option>
+                                    <option value="MENS" selected>Mens</option>
+                                    <option value="WOMENS">Womens</option>
+                                    <option value="GIFT">Gift</option>
+                                    <option value="BRAND">Brand</option>
                                     <option value="OTHER">Other</option>
                                 </select>
                             </div>
 
                             <div class="half-input" id="product-collection">
-                                <label>Dish Volume</label>
+                                <label>Perfume Volume</label>
                                 <select class="product-size" name="productSize">
-                                    <option value="SMALL">Small</option>
-                                    <option value="NORMAL" selected>Normal</option>
-                                    <option value="LARGE">Large</option>
-                                    <option value="SET">Set</option>
-                                </select>
-                            </div>
-
-                            <div class="half-input" id="product-volume" style="display: none">
-                                <label>Drink Volume</label>
-                                <select class="product-volume" name="productVolume">
-                                    <option value="0.5">0,5 liters</option>
-                                    <option value="1" selected>1 liters</option>
-                                    <option value="1.2">1,2 liters</option>
-                                    <option value="1.5">1,5 liters</option>
-                                    <option value="2">2 liters</option>
+                                    <option value="TEN">10 ml</option>
+                                    <option value="THIRTY" selected>30 ml</option>
+                                    <option value="FIFTY">50 ml</option>
+                                    <option value="HOUNDRED">100 ml</option>
                                 </select>
                             </div>
                         </div>
@@ -189,5 +177,6 @@
         </div>
 
         <script type="text/javascript" src="/js/products.js"></script>
+    </body>
 
-        <%- include('includes/footer') %>
+    <%- include('includes/footer') %>

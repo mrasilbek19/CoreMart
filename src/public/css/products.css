@@ -15,7 +15,7 @@
 }
 
 .products-container .nav-item a {
-  color: #020101;
+  color: #e3c08d;
 }
 
 .products-container .nav-item a.disabled {
@@ -28,10 +28,10 @@
   top: 1%;
   color: #efefee;
   font-size: 40px;
-  font-family: cursive;
+  font-family: monospace;
 }
 
-.products-container .restaurant-menu-frame {
+.products-container .shop-menu-frame {
   position: relative;
   padding-bottom: 80px;
   width: 100%;
@@ -42,7 +42,7 @@
   align-items: center;
 }
 
-.products-container .restaurant-menu-frame .board {
+.products-container .shop-menu-frame .board {
   position: relative;
   margin-top: 100px;
   width: 1320px;
@@ -75,7 +75,7 @@
 }
 
 .products-container .new-dish-txt {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Source Serif Pro";
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
