@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(-45deg, #110303f0, #dd6d04, #011c1afc, #7a6868);
+  background: linear-gradient(135deg, #c9558f 0%, #e8c9d8 15%, #f0ede0 35%, #a8ddd0 50%, #6fb8cc 65%, #4a7fb8 85%, #2a3a6e 100%);
 }
 
 .home-container a {
@@ -15,7 +15,7 @@
 }
 
 .home-container .nav-item a {
-  color: #e3c08d;
+  color: #090806;
 }
 
 .home-container .nav-item a.disabled {
@@ -25,7 +25,14 @@
 .home-container .navigation-menu {
   position: relative;
   z-index: 10000;
-  color: #efefee;
+  color: #000000;
   font-size: 40px;
-  font-family: monospace;
+  font-family: cursive;
 }
+
+
+
+/* animation from here */
+
+
+/*animation until here  */

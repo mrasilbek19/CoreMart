@@ -1,98 +1,18 @@
 console.log("Home frontend javascript file");
 
-function fitElementToParent(el, padding) {
-  let timeout = null;
+TweenMax.fromTo("#pm__galaxy", 10, { rotation: 0 }, { rotation: -5, repeat: -1, yoyo: true, force3D: "auto" });
 
-  function resize() {
-    if (timeout) clearTimeout(timeout);
-    anime.set(el, { scale: 1 });
-    let pad = padding || 0,
-      parentEl = el.parentNode,
-      elOffsetWidth = el.offsetWidth - pad,
-      parentOffsetWidth = parentEl.offsetWidth,
-      ratio = parentOffsetWidth / elOffsetWidth;
-    timeout = setTimeout(anime.set(el, { scale: ratio }), 10);
-  }
+TweenMax.fromTo("#pm__star-8", 10, { x: 0, y: 0 }, { x: 8, y: 12, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__star-7", 10, { x: 0, y: 0 }, { x: 8, y: -8, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__star-5", 10, { x: 0, y: 0 }, { x: -5, y: 5, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__star-4", 10, { x: 0, y: 0 }, { x: -12, y: 2, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__star-3", 10, { x: 0, y: 0 }, { x: -4, y: -8, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__star-2", 10, { x: 0, y: 0 }, { x: -10, y: -10, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__star-1", 10, { x: 0, y: 0 }, { x: -10, y: -10, repeat: -1, yoyo: true, force3D: "auto" })
 
-  resize();
-  window.addEventListener("resize", resize);
-}
-
-(function () {
-  const sphereEl = document.querySelector(".sphere-animation"),
-    spherePathEls = sphereEl.querySelectorAll(".sphere path"),
-    pathLength = spherePathEls.length,
-    animations = [];
-
-  fitElementToParent(sphereEl);
-
-  const breathAnimation = anime({
-    begin: function () {
-      for (let i = 0; i < pathLength; i++) {
-        animations.push(
-          anime({
-            targets: spherePathEls[i],
-            stroke: {
-              value: ["rgba(255,75,75,1)", "rgba(80,80,80,.35)"],
-              duration: 500,
-            },
-            translateX: [2, -4],
-            translateY: [2, -4],
-            easing: "easeOutQuad",
-            autoplay: false,
-          })
-        );
-      }
-    },
-    update: function (ins) {
-      animations.forEach(function (animation, i) {
-        let percent = (1 - Math.sin(i * 0.35 + 0.0022 * ins.currentTime)) / 2;
-        animation.seek(animation.duration * percent);
-      });
-    },
-    duration: Infinity,
-    autoplay: false,
-  });
-
-  const introAnimation = anime
-    .timeline({
-      autoplay: false,
-    })
-    .add(
-      {
-        targets: spherePathEls,
-        strokeDashoffset: {
-          value: [anime.setDashoffset, 0],
-          duration: 3900,
-          easing: "easeInOutCirc",
-          delay: anime.stagger(190, { direction: "reverse" }),
-        },
-        duration: 2000,
-        delay: anime.stagger(60, { direction: "reverse" }),
-        easing: "linear",
-      },
-      0
-    );
-
-  const shadowAnimation = anime(
-    {
-      targets: "#sphereGradient",
-      x1: "25%",
-      x2: "25%",
-      y1: "0%",
-      y2: "75%",
-      duration: 30000,
-      easing: "easeOutQuint",
-      autoplay: false,
-    },
-    0
-  );
-
-  function init() {
-    introAnimation.play();
-    breathAnimation.play();
-    shadowAnimation.play();
-  }
-
-  init();
-})();
+TweenMax.fromTo("#pm__line-1", 10, { rotation: 180, x: 60, y: 10 }, { rotation: 160, x: 68, y: 2, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__line-2", 10, { rotation: 180, x: 24, y: 24 }, { rotation: 200, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__line-3", 10, { rotation: 0 }, { rotation: 10, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__line-4", 10, { rotation: 0, x: 0, y: 0 }, { rotation: 10, x: -5, y: 5, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__line-5", 10, { rotation: 0, x: 0, y: 0 }, { rotation: -10, x: -12, y: 2, repeat: -1, yoyo: true, force3D: "auto" });
+TweenMax.fromTo("#pm__line-6", 10, { rotation: 0, x: 0, y: 0 }, { rotation: -10, x: -8, y: -8, repeat: -1, yoyo: true, force3D: "auto" });
