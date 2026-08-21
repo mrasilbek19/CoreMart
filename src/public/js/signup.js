@@ -27,12 +27,14 @@ $(function () {
 function validateSignupForm() {
     const memberNick = $(".member-nick").val(),
         memberPhone = $(".member-phone").val(),
+        memberEmail = $(".member-email").val(),
         memberPassword = $(".member-password").val(),
         confirmPassword = $(".confirm-password").val();
 
     if (
         memberNick === "" ||
         memberPhone === "" ||
+        memberEmail === "" ||
         memberPassword === "" ||
         confirmPassword === ""
     ) {
