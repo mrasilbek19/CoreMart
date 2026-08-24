@@ -70,7 +70,7 @@ productController.updateChosenProduct = async (req: Request, res: Response) => {
 
 /** SPA **/
 
-productController.getProducts = async (req: Request, res: Response) => {
+productController.getProducts = async (req: ExtendedRequest, res: Response) => {
     try {
         console.log("getProducts");
         const { page, limit, order, productCollection, search } = req.query;
@@ -82,7 +82,8 @@ productController.getProducts = async (req: Request, res: Response) => {
         if (productCollection) { inquiry.productCollection = productCollection as ProductCollection; }
         if (search) inquiry.search = String(search);
 
-        const result = await productService.getProducts(inquiry);
+        const memberId = req.member?._id ?? null;
+        const result = await productService.getProducts(memberId, inquiry);
 
         res.status(HttpCode.OK).json({ result: result });
     } catch (err) {

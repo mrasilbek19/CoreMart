@@ -26,7 +26,10 @@ class ProductService {
 
     /** SPA */
 
-    public async getProducts(inquiry: ProductInquiry): Promise<Product[]> {
+    public async getProducts(
+        memberId: ObjectId | null,
+        inquiry: ProductInquiry
+    ): Promise<Product[]> {
         const match: T = { productStatus: ProductStatus.PROCESS };
 
         if (inquiry.productCollection)
@@ -51,7 +54,18 @@ class ProductService {
 
         if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
-        return result;
+        if (!memberId) return result;
+
+        const likes = await this.likeService.getMemberLikes(
+            memberId,
+            LikeGroup.PRODUCT
+        );
+        const likedIds = likes.map((like) => String(like.likeRefId));
+
+        return result.map((product) => ({
+            ...product,
+            isLiked: likedIds.includes(String(product._id)),
+        }));
     };
 
     public async getProduct(
@@ -89,7 +103,15 @@ class ProductService {
                     .exec();
             }
         }
-        return result;
+        const product = result.toObject();
+        if (!memberId) return product;
+
+        const like = await this.likeService.checkLikeExistence({
+            memberId,
+            likeRefId: productId,
+            likeGroup: LikeGroup.PRODUCT,
+        });
+        return { ...product, isLiked: !!like };
     }
 
     public async plusLike(
@@ -138,7 +160,7 @@ class ProductService {
             }
         }
 
-        return result;
+        return { ...result.toObject(), isLiked: true };
     }
 
     public async minusLike(
@@ -187,7 +209,7 @@ class ProductService {
             }
         }
 
-        return result;
+        return { ...result.toObject(), isLiked: false };
     }
 
     /** SSR */

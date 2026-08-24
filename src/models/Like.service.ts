@@ -1,6 +1,8 @@
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import { Like, LikeInput } from "../libs/types/like";
 import LikeModel from "../schema/Like.model";
+import { ObjectId } from "mongoose";
+import { LikeGroup } from "../libs/enums/like.enum";
 
 
 class LikeService {
@@ -14,6 +16,13 @@ class LikeService {
         return await this.likeModel
             .findOne({ memberId: input.memberId, likeRefId: input.likeRefId })
             .exec();
+    }
+
+    public async getMemberLikes(
+        memberId: ObjectId,
+        likeGroup: LikeGroup
+    ): Promise<Like[]> {
+        return await this.likeModel.find({ memberId, likeGroup }).exec();
     }
 
     public async insertMemberLike(input: LikeInput): Promise<Like> {

@@ -31,6 +31,7 @@ router.post("/member/update",
 
 /* PRODUCT */
 router.get("/product/all",
+    memberController.retrieveAuth,
     productController.getProducts);
 
 router.get(
