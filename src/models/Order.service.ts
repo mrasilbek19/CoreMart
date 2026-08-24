@@ -8,6 +8,7 @@ import { ObjectId } from "mongoose";
 import { orderInquiry } from "../libs/types/order";
 import MemberService from "./Member.service";
 import { OrderStatus } from "../libs/enums/order.enum";
+import ProductModel from "../schema/Product.model";
 
 
 class OrderService {
@@ -26,20 +27,50 @@ class OrderService {
         input: OrderItemInput[]
     ): Promise<Order> {
         const memberId = shapeIntoMongooseObkectId(member._id);
-        const amount = input.reduce((accumulator: number, item: OrderItemInput) => {
-            return accumulator + item.itemPrice * item.itemQuantity;
-        }, 0);
-        const delivery = amount < 100 ? 5 : 0;
 
         try {
+            const productIds = input.map((item) =>
+                shapeIntoMongooseObkectId(item.productId)
+            );
+            const products = await ProductModel.find({ _id: { $in: productIds } });
+
+            const orderItems = input.map((item) => {
+                const product = products.find(
+                    (entry) => entry._id.toString() === item.productId.toString()
+                );
+                if (!product) {
+                    throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+                }
+
+                return {
+                    ...item,
+                    itemPrice: product.productPrice,
+                };
+            });
+
+            const subtotal = orderItems.reduce((total, item) => {
+                return total + item.itemPrice * item.itemQuantity;
+            }, 0);
+            const previousOrders = await this.orderModel.countDocuments({
+                memberId,
+                orderStatus: { $ne: OrderStatus.DELETE },
+            });
+            const discount = previousOrders === 0
+                ? Math.round(subtotal * 0.2 * 100) / 100
+                : 0;
+            const delivery = subtotal < 100 ? 5 : 0;
+            const total = Math.round((subtotal - discount + delivery) * 100) / 100;
+
             const newOrder: Order = await this.orderModel.create({
-                orderTotal: amount + delivery,
+                orderSubtotal: subtotal,
+                orderDiscount: discount,
+                orderTotal: total,
                 orderDelivery: delivery,
                 memberId: memberId,
             });
 
             const orderId = newOrder._id
-            await this.recordOrderItem(orderId, input)
+            await this.recordOrderItem(orderId, orderItems)
             return newOrder;
         } catch (err) {
             console.log("Error, model:createOrder:", err);
