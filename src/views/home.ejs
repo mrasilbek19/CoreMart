@@ -1,7 +1,6 @@
 <%- include('includes/header') %>
 
     <link rel="stylesheet" type="text/css" href="/css/home.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.js"></script>
 
     <body>
         <div class="home-container">
@@ -32,10 +31,60 @@
                 </ul>
             </div>
             <!-- animation from here -->
+            <main class="home-hero" aria-labelledby="home-title">
+                <div class="hero-copy">
+                    <span class="hero-eyebrow">PERFUMIA</span>
+                    <h1 id="home-title">Admin Panel</h1>
+                    <span class="hero-rule" aria-hidden="true"></span>
+                </div>
 
+                <div class="perfume-visual" aria-hidden="true">
+                    <svg class="perfume-scene" viewBox="0 0 520 520" role="presentation">
+                        <defs>
+                            <linearGradient id="bottleGlow" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#fffaf2" stop-opacity="0.95" />
+                                <stop offset="100%" stop-color="#e3c08d" stop-opacity="0.28" />
+                            </linearGradient>
+                            <linearGradient id="perfumeLiquid" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#e3c08d" stop-opacity="0.3" />
+                                <stop offset="100%" stop-color="#a67c46" stop-opacity="0.62" />
+                            </linearGradient>
+                        </defs>
 
+                        <g class="fragrance-lines" fill="none" stroke="#a67c46" stroke-linecap="round">
+                            <path d="M222 156 C190 121 225 91 205 61" />
+                            <path d="M260 143 C285 108 250 83 270 48" />
+                            <path d="M296 158 C330 126 302 99 325 72" />
+                        </g>
 
+                        <g class="sparkles" fill="#e3c08d">
+                            <circle class="particle particle-one" cx="156" cy="198" r="4" />
+                            <circle class="particle particle-two" cx="365" cy="177" r="3" />
+                            <circle class="particle particle-three" cx="390" cy="270" r="5" />
+                            <path class="sparkle sparkle-one" d="M139 279 L144 291 L156 296 L144 301 L139 313 L134 301 L122 296 L134 291 Z" />
+                            <path class="sparkle sparkle-two" d="M371 336 L375 345 L384 349 L375 353 L371 362 L367 353 L358 349 L367 345 Z" />
+                        </g>
+
+                        <ellipse class="bottle-shadow" cx="260" cy="438" rx="103" ry="18" />
+
+                        <g class="perfume-bottle">
+                            <path class="bottle-cap" d="M222 155 V116 Q222 102 236 102 H284 Q298 102 298 116 V155 Z" />
+                            <path class="cap-detail" d="M229 116 H291 M229 128 H291 M229 140 H291" />
+                            <path class="bottle-neck" d="M235 155 V181 H285 V155" />
+                            <path class="bottle-body" fill="url(#bottleGlow)"
+                                d="M204 181 H316 Q337 181 345 201 L375 277 Q380 290 380 304 V400 Q380 423 357 423 H163 Q140 423 140 400 V304 Q140 290 145 277 L175 201 Q183 181 204 181 Z" />
+                            <path class="bottle-liquid" fill="url(#perfumeLiquid)"
+                                d="M153 330 H367 V397 Q367 410 354 410 H166 Q153 410 153 397 Z" />
+                            <rect class="bottle-label" x="190" y="252" width="140" height="92" rx="2" />
+                            <text class="label-brand" x="260" y="290" text-anchor="middle">PERFUMIA</text>
+                            <path class="label-mark" d="M230 310 H290" />
+                            <text class="label-detail" x="260" y="327" text-anchor="middle">EAU DE PARFUM</text>
+                            <path class="bottle-highlight" d="M181 220 C163 264 161 290 161 318" />
+                        </g>
+                    </svg>
+                </div>
+            </main>
             <!-- animation until here -->
-            <script type="text/javascript" src="/js/home.js"></script>
+        </div>
 
-            <%- include('includes/footer') %>
+        <%- include('includes/footer') %>
