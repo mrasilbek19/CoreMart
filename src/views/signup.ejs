@@ -6,13 +6,15 @@
         <div class="signup-container">
             <form onsubmit="return validateSignupForm()" action="/admin/signup" method="POST"
                 enctype="multipart/form-data">
-                <div class="signup-frame" style="width: 650px">
+                <div class="signup-frame">
                     <div class="signup-top">
-                        <span>Signup</span>
-                        <div>Go back <a href="/admin" style="color: #6440fb">Home</a></div>
+                        <span class="page-eyebrow">PERFUMIA ADMIN</span>
+                        <h1>Create Account</h1>
+                        <span class="heading-rule" aria-hidden="true"></span>
+                        <div>Go back <a href="/admin">Home</a></div>
                         <p>
                             Already signed up?
-                            <a href="/admin/login" style="color: #6440fb">Login</a>
+                            <a href="/admin/login">Login</a>
                         </p>
                     </div>
 
@@ -26,7 +28,7 @@
                             <input type="text" name="memberPhone" class="member-phone" placeholder="Phone" value="" />
                         </div>
                     </div>
-                    <div class="sign-input-frame" style="justify-content: space-between">
+                    <div class="sign-input-frame single-field" style="justify-content: space-between">
                         <div class="sign-up-frame">
                             <label>Email *</label>
                             <input type="email" name="memberEmail" class="member-email" placeholder="Email" value="" />
