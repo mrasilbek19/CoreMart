@@ -30,82 +30,87 @@
                             <span class="heading-rule" aria-hidden="true"></span>
                         </div>
                         <div class="table-shell">
-                        <table class="table products-table">
-                            <thead class="thead-light">
-                                <tr class="thead-light">
-                                    <th scope="col">T/r</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Product Type</th>
-                                    <th scope="col">Product Volume</th>
-                                    <th scope="col">Product Price</th>
-                                    <th scope="col">Product Left Count</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col" class="action-heading">Edit</th>
-                                </tr>
-                            </thead>
-                            <!--  LOOP PRODUCTS: START  -->
-                            <% products.map(function(value, key){ %>
-                                <tbody>
-                                  <tr class="product-row" data-product-id="<%= value._id %>">
-                                    <td>
-                                        <%= key + 1 %>
-                                    </td>
-                                    <td class="editable-cell product-name-cell">
-                                        <span class="cell-value"><%= value.productName %></span>
-                                    </td>
-                                    <td>
-                                        <%= value.productCollection%>
-                                    </td>
-                                    <td>
-                                        <%= value.productVolume %> ml
-                                    </td>
-                                    <td class="editable-cell product-price-cell">
-                                        <span class="cell-value">$<%= value.productPrice %></span>
-                                    </td>
-                                    <td class="editable-cell product-count-cell">
-                                        <span class="cell-value"><%= value.productLeftCount %></span>
-                                    </td>
-                                    <td>
-                                        <select class="spec-select new-product-status" id="<%= value._id%>">
-                                            <option value="PAUSE" <%=value.productStatus==='PAUSE' ? 'selected' : '' %>
-                                                >PAUSE</option>
-                                            <option value="PROCESS" <%=value.productStatus==='PROCESS' ? 'selected' : ''
-                                                %>>PROCESS</option>
-                                            <option value="DELETE" <%=value.productStatus==='DELETE' ? 'selected' : ''
-                                                %>>DELETE</option>
-                                        </select>
-                                    </td>
-                                    <td class="row-actions">
-                                        <button type="button" class="icon-button edit-product-btn"
-                                            aria-label="Edit <%= value.productName %>" title="Edit product">
-                                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                                                <path d="M4 20h4l11-11-4-4L4 16v4Z" />
-                                                <path d="m13.5 6.5 4 4" />
-                                            </svg>
-                                        </button>
-                                        <div class="edit-actions" hidden>
-                                            <button type="button" class="icon-button save-product-btn"
-                                                aria-label="Save product" title="Save">
-                                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                                    <path d="m5 12 4 4L19 6" />
-                                                </svg>
-                                            </button>
-                                            <button type="button" class="icon-button cancel-edit-btn"
-                                                aria-label="Cancel editing" title="Cancel">
-                                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                                    <path d="m6 6 12 12M18 6 6 18" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
+                            <table class="table products-table">
+                                <thead class="thead-light">
+                                    <tr class="thead-light">
+                                        <th scope="col">T/r</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Product Type</th>
+                                        <th scope="col">Product Volume</th>
+                                        <th scope="col">Product Price</th>
+                                        <th scope="col">Product Left Count</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="action-heading">Edit</th>
+                                    </tr>
+                                </thead>
+                                <!--  LOOP PRODUCTS: START  -->
+                                <% products.map(function(value, key){ %>
+                                    <tbody>
+                                        <tr class="product-row" data-product-id="<%= value._id %>">
+                                            <td>
+                                                <%= key + 1 %>
+                                            </td>
+                                            <td class="editable-cell product-name-cell">
+                                                <span class="cell-value">
+                                                    <%= value.productName %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <%= value.productCollection%>
+                                            </td>
+                                            <td>
+                                                <%= value.productVolume %> ml
+                                            </td>
+                                            <td class="editable-cell product-price-cell">
+                                                <span class="cell-value">$<%= value.productPrice %></span>
+                                            </td>
+                                            <td class="editable-cell product-count-cell">
+                                                <span class="cell-value">
+                                                    <%= value.productLeftCount %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <select class="spec-select new-product-status" id="<%= value._id%>">
+                                                    <option value="PAUSE" <%=value.productStatus==='PAUSE' ? 'selected'
+                                                        : '' %>
+                                                        >PAUSE</option>
+                                                    <option value="PROCESS" <%=value.productStatus==='PROCESS'
+                                                        ? 'selected' : '' %>>PROCESS</option>
+                                                    <option value="DELETE" <%=value.productStatus==='DELETE'
+                                                        ? 'selected' : '' %>>DELETE</option>
+                                                </select>
+                                            </td>
+                                            <td class="row-actions">
+                                                <button type="button" class="icon-button edit-product-btn"
+                                                    aria-label="Edit <%= value.productName %>" title="Edit product">
+                                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path d="M4 20h4l11-11-4-4L4 16v4Z" />
+                                                        <path d="m13.5 6.5 4 4" />
+                                                    </svg>
+                                                </button>
+                                                <div class="edit-actions" hidden>
+                                                    <button type="button" class="icon-button save-product-btn"
+                                                        aria-label="Save product" title="Save">
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="m5 12 4 4L19 6" />
+                                                        </svg>
+                                                    </button>
+                                                    <button type="button" class="icon-button cancel-edit-btn"
+                                                        aria-label="Cancel editing" title="Cancel">
+                                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="m6 6 12 12M18 6 6 18" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
 
 
-                                <% })%>
+                                    <% })%>
 
-                                    <!--  LOOP PRODUCTS: END  -->
-                        </table>
+                                        <!--  LOOP PRODUCTS: END  -->
+                            </table>
                         </div>
                         <div class="long-input" style="align-items: flex-end; margin-bottom: 25px">
                             <button type="button" class="btn btn-primary" id="process-btn">
@@ -167,27 +172,27 @@
                             <label>Product Images</label>
                             <div class="media-frame">
                                 <div class="upload-img-box">
-                                    <img src="/img/upload.svg" class="1" id="image-section-1" />
+                                    <img src="/img/plusIcon.svg" class="1" id="image-section-1" />
                                     <input type="file" id="file" name="productImages" class="image-one" required
                                         onchange="previewFileHandler(this, 1)" />
                                 </div>
                                 <div class="upload-img-box">
-                                    <img src="/img/upload.svg" class="2" id="image-section-2" />
+                                    <img src="/img/plusIcon.svg" class="2" id="image-section-2" />
                                     <input type="file" id="file" name="productImages" class="image-two"
                                         onchange="previewFileHandler(this, 2)" />
                                 </div>
                                 <div class="upload-img-box">
-                                    <img src="/img/upload.svg" class="3" id="image-section-3" />
+                                    <img src="/img/plusIcon.svg" class="3" id="image-section-3" />
                                     <input type="file" id="file" name="productImages" class="image-three"
                                         onchange="previewFileHandler(this, 3)" />
                                 </div>
                                 <div class="upload-img-box">
-                                    <img src="/img/upload.svg" class="4" id="image-section-4" />
+                                    <img src="/img/plusIcon.svg" class="4" id="image-section-4" />
                                     <input type="file" id="file" name="productImages" class="image-four"
                                         onchange="previewFileHandler(this, 4)" />
                                 </div>
                                 <div class="upload-img-box">
-                                    <img src="/img/upload.svg" class="5" id="image-section-5" />
+                                    <img src="/img/plusIcon.svg" class="5" id="image-section-5" />
                                     <input type="file" id="file" name="productImages" class="image-five"
                                         onchange="previewFileHandler(this, 5)" />
                                 </div>
