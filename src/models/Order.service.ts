@@ -11,15 +11,18 @@ import { OrderStatus } from "../libs/enums/order.enum";
 import ProductModel from "../schema/Product.model";
 
 
+
 class OrderService {
     private readonly orderModel;
     private readonly orderItemModel;
     private readonly memberService;
+    private readonly productModel;
 
     constructor() {
         this.orderModel = OrderModel;
         this.orderItemModel = OrderItemModel;
         this.memberService = new MemberService();
+        this.productModel = ProductModel;
     }
 
     public async createOrder(
@@ -132,9 +135,43 @@ class OrderService {
         member: Member,
         input: OrderUpdateInput
     ): Promise<Order> {
-        const memberId = shapeIntoMongooseObkectId(member._id),
-            orderId = shapeIntoMongooseObkectId(input.orderId),
-            orderStatus = input.orderStatus;
+        const memberId = shapeIntoMongooseObkectId(member._id);
+        const orderId = shapeIntoMongooseObkectId(input.orderId);
+        const orderStatus = input.orderStatus;
+
+        const order = await this.orderModel.findOne({
+            memberId,
+            _id: orderId,
+        });
+
+        if (!order) {
+            throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+        }
+
+        if (
+            orderStatus === OrderStatus.PROCESS &&
+            order.orderStatus !== OrderStatus.PROCESS
+        ) {
+            const orderItems = await this.orderItemModel.find({
+                orderId: order._id,
+            });
+
+            for (const item of orderItems) {
+                await this.productModel.findOneAndUpdate(
+                    {
+                        _id: item.productId,
+                        productLeftCount: { $gte: item.itemQuantity },
+                    },
+                    {
+                        $inc: {
+                            productLeftCount: -item.itemQuantity,
+                        },
+                    }
+                );
+            }
+
+            await this.memberService.addUserPoint(member, 1);
+        }
 
         const result = await this.orderModel
             .findOneAndUpdate(
@@ -142,15 +179,20 @@ class OrderService {
                     memberId: memberId,
                     _id: orderId,
                 },
-                { orderStatus: orderStatus },
-                { new: true }
+                {
+                    orderStatus: orderStatus,
+                },
+                {
+                    new: true,
+                }
             )
             .exec();
 
-        if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
-
-        if (orderStatus === OrderStatus.PROCESS) {
-            await this.memberService.addUserPoint(member, 1)
+        if (!result) {
+            throw new Errors(
+                HttpCode.NOT_MODIFIED,
+                Message.UPDATE_FAILED
+            );
         }
 
         return result;
