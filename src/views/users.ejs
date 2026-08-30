@@ -19,8 +19,8 @@
                     </ul>
                 </div>
 
-                <div class="users-frame" style="color: #dddddd">
-                    <div class="board" style="font-size: 40px">Please login first!</div>
+                <div class="users-frame logged-out-message">
+                    <div class="board">Please login first!</div>
                 </div>
 
                 <% } else { %>
@@ -45,7 +45,12 @@
                     <div class="users-frame">
                         <div class="board">
                             <div class="user-table">
-                                <span class="header-name" style="margin-bottom: 30px">All Users List</span>
+                                <div class="page-heading">
+                                    <span class="page-eyebrow">PERFUMIA ADMIN</span>
+                                    <h1 class="header-name">Users</h1>
+                                    <span class="heading-rule" aria-hidden="true"></span>
+                                </div>
+                                <div class="table-shell">
                                 <table class="table table-hover table-sm">
                                     <thead class="thead-light">
                                         <tr class="thead-light">
@@ -57,7 +62,8 @@
                                     </thead>
 
                                     <% users.map(function(value, index) { %>
-                                        <tbody style="background: white">
+                                        <tbody>
+                                          <tr>
                                             <td>
                                                 <%= index+1 %>
                                             </td>
@@ -77,11 +83,13 @@
                                                         : '' %>>DELETE</option>
                                                 </select>
                                             </td>
+                                          </tr>
                                         </tbody>
                                         <% })%>
 
 
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
