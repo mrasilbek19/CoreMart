@@ -24,10 +24,13 @@
             <div class="shop-menu-frame">
                 <div class="board">
                     <div class="dishes-table">
-                        <span class="new-dish-txt" style="margin-bottom: 30px">
-                            SHOP MENU
-                        </span>
-                        <table class="table table-bordered table-hover">
+                        <div class="page-heading">
+                            <span class="page-eyebrow">PERFUMIA ADMIN</span>
+                            <h1 class="new-dish-txt">Product Menu</h1>
+                            <span class="heading-rule" aria-hidden="true"></span>
+                        </div>
+                        <div class="table-shell">
+                        <table class="table products-table">
                             <thead class="thead-light">
                                 <tr class="thead-light">
                                     <th scope="col">T/r</th>
@@ -37,16 +40,18 @@
                                     <th scope="col">Product Price</th>
                                     <th scope="col">Product Left Count</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col" class="action-heading">Edit</th>
                                 </tr>
                             </thead>
                             <!--  LOOP PRODUCTS: START  -->
                             <% products.map(function(value, key){ %>
-                                <tbody style="background: white">
+                                <tbody>
+                                  <tr class="product-row" data-product-id="<%= value._id %>">
                                     <td>
                                         <%= key + 1 %>
                                     </td>
-                                    <td>
-                                        <%= value.productName%>
+                                    <td class="editable-cell product-name-cell">
+                                        <span class="cell-value"><%= value.productName %></span>
                                     </td>
                                     <td>
                                         <%= value.productCollection%>
@@ -54,11 +59,11 @@
                                     <td>
                                         <%= value.productVolume %> ml
                                     </td>
-                                    <td>
-                                        $<%= value.productPrice%>
+                                    <td class="editable-cell product-price-cell">
+                                        <span class="cell-value">$<%= value.productPrice %></span>
                                     </td>
-                                    <td>
-                                        <%= value.productLeftCount%>
+                                    <td class="editable-cell product-count-cell">
+                                        <span class="cell-value"><%= value.productLeftCount %></span>
                                     </td>
                                     <td>
                                         <select class="spec-select new-product-status" id="<%= value._id%>">
@@ -70,6 +75,30 @@
                                                 %>>DELETE</option>
                                         </select>
                                     </td>
+                                    <td class="row-actions">
+                                        <button type="button" class="icon-button edit-product-btn"
+                                            aria-label="Edit <%= value.productName %>" title="Edit product">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M4 20h4l11-11-4-4L4 16v4Z" />
+                                                <path d="m13.5 6.5 4 4" />
+                                            </svg>
+                                        </button>
+                                        <div class="edit-actions" hidden>
+                                            <button type="button" class="icon-button save-product-btn"
+                                                aria-label="Save product" title="Save">
+                                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                    <path d="m5 12 4 4L19 6" />
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="icon-button cancel-edit-btn"
+                                                aria-label="Cancel editing" title="Cancel">
+                                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                    <path d="m6 6 12 12M18 6 6 18" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                  </tr>
                                 </tbody>
 
 
@@ -77,8 +106,9 @@
 
                                     <!--  LOOP PRODUCTS: END  -->
                         </table>
+                        </div>
                         <div class="long-input" style="align-items: flex-end; margin-bottom: 25px">
-                            <button class="btn btn-primary" id="process-btn">
+                            <button type="button" class="btn btn-primary" id="process-btn">
                                 New Product
                             </button>
                         </div>
@@ -166,7 +196,7 @@
                         </div>
 
                         <div class="operation-buttons">
-                            <button class="btn btn-danger" id="cancel-btn">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="cancel-btn">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="create-btn">
                                 Create
                             </button>
