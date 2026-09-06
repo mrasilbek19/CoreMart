@@ -67,10 +67,8 @@ shopController.processSignup = async (req: AdminRequest, res: Response) => {
 shopController.processLogin = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processLogin page")
-        console.log(req.body)
-        const input: LoginInput = req.body
-        console.log("++", input);
-        const result = await memberService.processLogin(input)
+        const input: LoginInput = req.body,
+            result = await memberService.processLogin(input)
 
         req.session.member = result;
         req.session.save(function () {
