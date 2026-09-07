@@ -8,8 +8,13 @@ $(function () {
         const missingImage = modal.querySelector(".user-detail-image-missing");
 
         profileImage.addEventListener("error", function () {
-            profileImage.hidden = true;
             missingImage.hidden = false;
+            if (profileImage.getAttribute("src") !== "/img/default.webp") {
+                profileImage.src = "/img/default.webp";
+                profileImage.alt = "Default avatar";
+            } else {
+                profileImage.hidden = true;
+            }
         });
 
         document.querySelectorAll(".user-name").forEach(function (button) {
@@ -21,16 +26,18 @@ $(function () {
                         ? "Not provided" : value;
                 });
 
-                profileImage.hidden = true;
+                profileImage.hidden = false;
+                profileImage.alt = "Default avatar";
+                profileImage.src = "/img/default.webp";
                 missingImage.hidden = false;
-                profileImage.removeAttribute("src");
                 if (user.memberImage && user.memberImage.trim()) {
                     // Uploaded images are stored as relative paths, e.g. uploads/members/....
                     profileImage.src = "/" + user.memberImage.replace(/^\.?\/+/, "");
-                    profileImage.hidden = false;
+                    profileImage.alt = "User profile";
                     missingImage.hidden = true;
                 }
                 modal.showModal();
+                modal.querySelector(".user-detail-content").scrollTop = 0;
             });
         });
 
@@ -38,7 +45,9 @@ $(function () {
             modal.close();
         });
         modal.addEventListener("click", function (event) {
-            if (event.target === modal) modal.close();
+            if (event.target === modal) {
+                modal.close();
+            }
         });
     }
 

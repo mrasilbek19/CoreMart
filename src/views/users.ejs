@@ -97,20 +97,27 @@
                         </div>
                     </div>
                     <dialog class="user-detail-modal" aria-labelledby="user-detail-title">
-                        <div class="user-detail-content">
-                            <button type="button" class="user-detail-close" aria-label="Close user information" autofocus>&times;</button>
-                            <span class="page-eyebrow">PERFUMIA ADMIN</span>
-                            <h2 id="user-detail-title">User Information</h2>
-                            <div class="user-detail-profile">
-                                <img class="user-detail-image" alt="User profile" hidden />
-                                <p class="user-detail-image-missing">Profile image: Not provided</p>
+                        <div class="user-detail-panel">
+                            <header class="user-detail-header">
+                                <button type="button" class="user-detail-close" aria-label="Close user information" autofocus>&times;</button>
+                                <span class="page-eyebrow">PERFUMIA ADMIN</span>
+                                <h2 id="user-detail-title">User Information</h2>
+                            </header>
+                            <div class="user-detail-content">
+                                <div class="user-detail-profile">
+                                    <img class="user-detail-image" alt="Default avatar" src="/img/default.webp" />
+                                    <p class="user-detail-image-missing">Profile image: Not provided</p>
+                                </div>
+                                <dl class="user-detail-grid">
+                                    <% const detailFields = { memberNick: 'Name', memberPhone: 'Phone', memberEmail: 'Email', memberAddress: 'Address', memberType: 'Member Type', memberStatus: 'Member Status', memberPoints: 'Points', memberDesc: 'Description' }; %>
+                                    <% Object.entries(detailFields).forEach(function([field, label]) { %>
+                                        <div class="<%= field === 'memberDesc' ? 'user-detail-description' : '' %>">
+                                            <dt><%= label %></dt>
+                                            <dd data-field="<%= field %>">Not provided</dd>
+                                        </div>
+                                    <% }) %>
+                                </dl>
                             </div>
-                            <dl class="user-detail-fields">
-                                <% const detailFields = { memberNick: 'Name', memberEmail: 'Email', memberPhone: 'Phone', memberAddress: 'Address', memberDesc: 'Description', memberType: 'Member Type', memberStatus: 'Member Status', memberPoints: 'Points' }; %>
-                                <% Object.entries(detailFields).forEach(function([field, label]) { %>
-                                    <div><dt><%= label %></dt><dd data-field="<%= field %>">Not provided</dd></div>
-                                <% }) %>
-                            </dl>
                         </div>
                     </dialog>
                     <% } %>
