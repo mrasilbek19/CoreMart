@@ -96,8 +96,12 @@
                             </div>
                         </div>
                     </div>
-                    <dialog class="user-detail-modal" aria-labelledby="user-detail-title">
-                        <div class="user-detail-panel">
+                    <% } %>
+        </div>
+
+        <% if (member) { %>
+                    <dialog class="user-detail-overlay" aria-labelledby="user-detail-title">
+                        <div class="user-detail-modal">
                             <header class="user-detail-header">
                                 <button type="button" class="user-detail-close" aria-label="Close user information" autofocus>&times;</button>
                                 <span class="page-eyebrow">PERFUMIA ADMIN</span>
@@ -106,7 +110,6 @@
                             <div class="user-detail-content">
                                 <div class="user-detail-profile">
                                     <img class="user-detail-image" alt="Default avatar" src="/img/default.webp" />
-                                    <p class="user-detail-image-missing">Profile image: Not provided</p>
                                 </div>
                                 <dl class="user-detail-grid">
                                     <% const detailFields = { memberNick: 'Name', memberPhone: 'Phone', memberEmail: 'Email', memberAddress: 'Address', memberType: 'Member Type', memberStatus: 'Member Status', memberPoints: 'Points', memberDesc: 'Description' }; %>
@@ -120,8 +123,7 @@
                             </div>
                         </div>
                     </dialog>
-                    <% } %>
-        </div>
+        <% } %>
 
         <script type="text/javascript" src="/js/users.js"></script>
 

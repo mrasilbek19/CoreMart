@@ -278,16 +278,22 @@
 }
 
 /* Keep the page still without shifting its width when the dialog opens. */
-html:has(.user-detail-modal) {
+html:has(.user-detail-overlay) {
   scrollbar-gutter: stable;
 }
 
-html:has(.user-detail-modal[open]) {
+html:has(.user-detail-overlay[open]) {
   overflow: hidden;
 }
 
-.user-detail-modal {
+/* Bootstrap 4 gives every dialog display:block, including closed dialogs. */
+.user-detail-overlay:not([open]) {
+  display: none;
+}
+
+.user-detail-overlay {
   position: fixed;
+  z-index: 9999;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -302,18 +308,19 @@ html:has(.user-detail-modal[open]) {
   color: #2b241c;
 }
 
-.user-detail-modal[open] {
+.user-detail-overlay[open] {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.user-detail-modal::backdrop {
+.user-detail-overlay::backdrop {
   background: rgba(43, 36, 28, 0.45);
 }
 
-.user-detail-panel {
+.user-detail-modal {
   position: relative;
+  z-index: 10000;
   display: flex;
   flex-direction: column;
   width: min(1000px, 100%);
@@ -332,7 +339,7 @@ html:has(.user-detail-modal[open]) {
   padding: 28px 72px 24px 32px;
 }
 
-.user-detail-modal h2 {
+.user-detail-overlay h2 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 30px;
@@ -381,12 +388,6 @@ html:has(.user-detail-modal[open]) {
   object-fit: cover;
 }
 
-.user-detail-image-missing {
-  margin: 12px 0 0;
-  font-size: 13px;
-  color: #a67c46;
-}
-
 .user-detail-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -421,11 +422,11 @@ html:has(.user-detail-modal[open]) {
 }
 
 @media (max-width: 800px) {
-  .user-detail-modal {
+  .user-detail-overlay {
     padding: 16px;
   }
 
-  .user-detail-panel {
+  .user-detail-modal {
     max-height: calc(100vh - 32px);
     max-height: calc(100dvh - 32px);
   }
@@ -447,7 +448,7 @@ html:has(.user-detail-modal[open]) {
     padding: 24px 64px 24px 20px;
   }
 
-  .user-detail-modal h2 {
+  .user-detail-overlay h2 {
     font-size: 25px;
   }
 

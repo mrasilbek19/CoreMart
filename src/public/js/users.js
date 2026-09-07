@@ -1,14 +1,12 @@
 console.log("Users frontend javascript file");
 
 $(function () {
-    const modal = document.querySelector(".user-detail-modal");
+    const modal = document.querySelector(".user-detail-overlay");
 
     if (modal) {
         const profileImage = modal.querySelector(".user-detail-image");
-        const missingImage = modal.querySelector(".user-detail-image-missing");
 
         profileImage.addEventListener("error", function () {
-            missingImage.hidden = false;
             if (profileImage.getAttribute("src") !== "/img/default.webp") {
                 profileImage.src = "/img/default.webp";
                 profileImage.alt = "Default avatar";
@@ -26,16 +24,18 @@ $(function () {
                         ? "Not provided" : value;
                 });
 
-                profileImage.hidden = false;
-                profileImage.alt = "Default avatar";
-                profileImage.src = "/img/default.webp";
-                missingImage.hidden = false;
-                if (user.memberImage && user.memberImage.trim()) {
-                    // Uploaded images are stored as relative paths, e.g. uploads/members/....
-                    profileImage.src = "/" + user.memberImage.replace(/^\.?\/+/, "");
-                    profileImage.alt = "User profile";
-                    missingImage.hidden = true;
+                const imagePath = (user.memberImage || "").trim().replace(/\\/g, "/");
+                let imageUrl = "/img/default.webp";
+                if (imagePath) {
+                    if (/^https?:\/\//i.test(imagePath)) {
+                        imageUrl = imagePath;
+                    } else {
+                        imageUrl = "/" + imagePath.replace(/^\.?\/+/, "");
+                    }
                 }
+                profileImage.hidden = false;
+                profileImage.alt = imagePath ? "User profile" : "Default avatar";
+                profileImage.src = imageUrl;
                 modal.showModal();
                 modal.querySelector(".user-detail-content").scrollTop = 0;
             });
